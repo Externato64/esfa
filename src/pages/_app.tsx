@@ -1,18 +1,16 @@
 import { storages } from '@/storages'
 import { Provider, observer } from 'mobx-react'
 import type { AppProps } from 'next/app'
-import { Roboto } from 'next/font/google'
 import Login from './login'
 import Head from 'next/head'
-
-const roboto = Roboto({
-  subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900']
-})
+import { GlobalStyle } from '@/styles'
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <Provider {...storages} >
+      {/* <GoogleOAuthProvider
+        clientId='144382331424-va97nu97c1bihklq3q91uadudhg1oi5r.apps.googleusercontent.com'
+      > */}
       <Head>
           <meta name="description" content="Website administrativo para o app EsfaCX" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,10 +18,11 @@ function App({ Component, pageProps }: AppProps) {
       </Head>
       {
         storages.authStorage.authenticated ?
-        <Component className={`${roboto.className}`} {...pageProps} />
+        <Component {...pageProps} />
         :
-        <Login className={`${roboto.className}`} {...pageProps} />
+        <Login {...pageProps} />
       }
+      <GlobalStyle />
     </Provider>
   )
 }

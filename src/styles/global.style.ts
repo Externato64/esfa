@@ -1,4 +1,12 @@
 import { createGlobalStyle } from "styled-components";
+import { esfaTheme } from "./theme.style";
+import { Roboto } from 'next/font/google'
+
+const roboto = Roboto({
+    subsets: ['latin'],
+    weight: ['100', '300', '400', '500', '700', '900']
+  })
+  
 
 export const GlobalStyle = createGlobalStyle`
     * {
@@ -9,8 +17,9 @@ export const GlobalStyle = createGlobalStyle`
         @media (max-height: 800px) {
         font-size: 14px;
         }
+        font-family: ${roboto.style.fontFamily};
     }
     body {
-        color: ${({theme}) => theme.colors.text};
+        color: ${esfaTheme.colors.text};
     }
 `;

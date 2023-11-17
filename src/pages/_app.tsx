@@ -3,14 +3,15 @@ import { Provider, observer } from 'mobx-react'
 import type { AppProps } from 'next/app'
 import Login from './login'
 import Head from 'next/head'
-import { GlobalStyle } from '@/styles'
+import { GlobalStyle, esfaTheme } from '@/styles'
+import { ThemeProvider } from 'styled-components'
 
 function App({ Component, pageProps }: AppProps) {
   return (
     <Provider {...storages} >
-      {/* <GoogleOAuthProvider
-        clientId='144382331424-va97nu97c1bihklq3q91uadudhg1oi5r.apps.googleusercontent.com'
-      > */}
+      <ThemeProvider
+        theme={esfaTheme}
+      >
       <Head>
           <meta name="description" content="Website administrativo para o app EsfaCX" />
           <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -22,6 +23,7 @@ function App({ Component, pageProps }: AppProps) {
         :
         <Login {...pageProps} />
       }
+      </ThemeProvider>
       <GlobalStyle />
     </Provider>
   )

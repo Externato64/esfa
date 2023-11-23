@@ -1,10 +1,12 @@
-import { storages } from '@/storages'
-import { Provider, observer } from 'mobx-react'
-import type { AppProps } from 'next/app'
-import Login from './login'
-import Head from 'next/head'
-import { GlobalStyle, esfaTheme } from '@/styles'
-import { ThemeProvider } from 'styled-components'
+import { storages } from '@/storages';
+import { Provider, observer } from 'mobx-react';
+import type { AppProps } from 'next/app';
+import Head from 'next/head';
+import { GlobalStyle, esfaTheme } from '@/styles';
+import { ThemeProvider } from 'styled-components';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Hooks } from '@/hooks';
 
 function App({ Component, pageProps }: AppProps) {
   return (
@@ -17,16 +19,14 @@ function App({ Component, pageProps }: AppProps) {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
           <link rel="icon" href="/favicon.ico" />
       </Head>
-      {
-        storages.authStorage.authenticated ?
-        <Component {...pageProps} />
-        :
-        <Login {...pageProps} />
-      }
+      <Hooks>
+          <Component {...pageProps} />
+      </Hooks>
       </ThemeProvider>
       <GlobalStyle />
+      <ToastContainer />
     </Provider>
-  )
+  );
 }
 
 export default observer(App);

@@ -2,6 +2,7 @@ import React, { ReactNode } from "react";
 import { Container } from "./styles";
 import { Loading } from "../Loading";
 import { useTheme } from "styled-components";
+// import { GetServerSideProps } from "next";
 
 type ButtonProps = {
     name: string;
@@ -10,7 +11,7 @@ type ButtonProps = {
     isLoading?: boolean;
     PrefixIcon?: ReactNode;
     SufixIcon?: ReactNode;
-}
+};
 
 export const Button = ({
     name,
@@ -21,6 +22,7 @@ export const Button = ({
     SufixIcon,
     ...props
 }: ButtonProps): JSX.Element => {
+
     const theme = useTheme();
     const iconColor = theme.colors.text_inverse;
 
@@ -34,6 +36,7 @@ export const Button = ({
                 isLoading ?
                 <Loading
                     color1={iconColor}
+                    color2={iconColor}
                     size={1.5}
                 />
                 :
@@ -46,3 +49,12 @@ export const Button = ({
         </Container>
     )
 }
+
+// export const getServerSideProps = (async (context) => {
+//     const theme = useTheme();
+//     console.log('server side');
+//     console.log(theme);
+//     return { props: { iconColor: theme.colors.text_inverse } }
+//   }) satisfies GetServerSideProps<{
+//     iconColor?: string;
+//   }>

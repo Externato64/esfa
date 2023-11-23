@@ -26,7 +26,7 @@ const ToastProvider = ({ children }: ToastProviderType): JSX.Element => {
             progress: undefined,
             theme: "light",
         });
-    }
+    };
 
     const toastSuccess = (message: string) => {
         toast.success(message, {
@@ -39,7 +39,7 @@ const ToastProvider = ({ children }: ToastProviderType): JSX.Element => {
             progress: undefined,
             theme: "light",
         });
-    }
+    };
     
     const toastError = (message: string) => {
         toast.error(message, {
@@ -52,7 +52,7 @@ const ToastProvider = ({ children }: ToastProviderType): JSX.Element => {
             progress: undefined,
             theme: "light",
         });
-    }
+    };
 
     const toastWarning = (message: string) => {
         toast.warning(message, {
@@ -65,7 +65,7 @@ const ToastProvider = ({ children }: ToastProviderType): JSX.Element => {
             progress: undefined,
             theme: "light",
         });
-    }
+    };
 
     return (
         <ToastContext.Provider
@@ -78,8 +78,8 @@ const ToastProvider = ({ children }: ToastProviderType): JSX.Element => {
         >
             {children}
         </ToastContext.Provider>
-    )
-}
+    );
+};
 
 function useToast() {
     const context = useContext(ToastContext);

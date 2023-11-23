@@ -1,22 +1,63 @@
-import Head from 'next/head'
-import { Container } from './styles'
-import { observer } from 'mobx-react-lite'
-import { inject } from 'mobx-react'
-import { Storage } from '@/types'
+'use client';
+import React, { useEffect, useState } from "react";
+import Head from 'next/head';
+import Image from 'next/image';
+import { inject, observer } from "mobx-react";
+import { Container, GoogleIcon, LoginArea, LoginButton, LoginInfoArea, LoginInfoText } from './styles';
+import { PageProps, Storage } from "@/types";
+import { useSession, useToast } from "@/hooks";
+import { useRouter } from "next/router";
 
-function Home() {
-  return (
-    <>
-      <Head>
-        <title>EsfaCX</title>
-        <meta name="description" content="Website administrativo para o app EsfaCX" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Container>
-      </Container>
-    </>
-  )
+function LoginPage({ authStorage }: PageProps): JSX.Element {
+
+    const {isAuthenticated} = useSession();
+    const router = useRouter();
+
+    useEffect(() => {
+      if(isAuthenticated) {
+        router.push('/dashboard/home');
+      }
+      //eslint-disable-next-line
+    }, [isAuthenticated]);
+
+    const {toastError} = useToast();
+    const {signIn, inProgressSignIn} = useSession();
+
+    const logGoogleUser = async () => {
+        try {
+            await signIn();
+            authStorage.setAuthenticated(true);
+        } catch(err) {
+            toastError('Ocorreu um erro fazer login');
+        }
+    };
+    return (
+        <>
+            <Head>
+                <title>Login - EsfaCX</title>
+            </Head>
+            <Container>
+                <LoginArea>
+                    <Image
+                        alt='Logo Externato'
+                        width="150"
+                        height="150"
+                        src="/images/logo_externato.png"
+                    />
+                    <LoginInfoArea>
+                        <LoginInfoText>Logar com o google</LoginInfoText>
+                        <LoginButton
+                            name='Entrar com o google'
+                            onClick={logGoogleUser}
+                            PrefixIcon={<GoogleIcon />}
+                            isLoading={inProgressSignIn}
+                            active={!inProgressSignIn}
+                        />
+                    </LoginInfoArea>
+                </LoginArea>
+            </Container>
+        </>
+    );
 }
 
-export default inject(Storage.AUTH)(observer(Home));
+export default inject(Storage.AUTH)(observer(LoginPage));

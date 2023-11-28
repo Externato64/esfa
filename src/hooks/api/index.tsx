@@ -5,6 +5,7 @@ import { ApiException, AuthException, InternalException } from "@/services/api/e
 import { IAuthRequest, ICreateProductsRequest } from "@/types/api";
 import { AuthApi } from "@/services/api";
 import { CreateProductApi } from "@/services/api/requests/create-product.api";
+import { GetUsersApi } from "@/services/api/requests/get-users.api";
 
 const ApiContext = createContext({} as ApiContextType);
 
@@ -57,11 +58,21 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
     }
   };
 
+  const getUsers = async () => {
+    try {
+      return await GetUsersApi.execute(token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
         auth,
         createProduct,
+        getUsers,
         token,
       }}>
       {children}

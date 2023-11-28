@@ -36,8 +36,8 @@ export const UserPhoto = styled.div<UserPhotoProps>`
     border-radius: 50%;
     background: url(${({ profileImage }) => `'${profileImage}'`});
     background-size: cover;
-    height: 2rem;
-    width: 2rem;
+    height: 3.7rem;
+    width: 3.7rem;
     transition: 0.1s;
 `;
 

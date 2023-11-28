@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { inject, observer } from "mobx-react";
 import { Container, GoogleIcon, LoginArea, LoginButton, LoginInfoArea, LoginInfoText } from './styles';
-import { PageProps, Storage } from "@/types";
+import { PageProps, Pages, Storage } from "@/types";
 import { useSession, useToast } from "@/hooks";
 import { useRouter } from "next/router";
 
@@ -15,7 +15,10 @@ function LoginPage({ authStorage }: PageProps): JSX.Element {
 
     useEffect(() => {
       if(isAuthenticated) {
-        router.push('/dashboard/home');
+        authStorage.setRoute(Pages.HOME);
+        router.push(Pages.HOME);
+    } else {
+        authStorage.setRoute(Pages.LOGIN);
       }
       //eslint-disable-next-line
     }, [isAuthenticated]);

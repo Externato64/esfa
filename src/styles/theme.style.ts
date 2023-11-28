@@ -6,6 +6,7 @@ const esfaTheme = {
 
       secondary: '#5232C9',
       secondary_light: 'rgba(82, 50, 201, 0.5)',
+      secondary_ultralight: 'rgba(100, 100, 180, 0.1)',
   
       text_gray_3: '#697C99',
       text_gray_2: '#283241',

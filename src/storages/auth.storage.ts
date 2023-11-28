@@ -1,10 +1,11 @@
-import { IUser, Storage } from '@/types';
+import { IUser, Pages, Storage } from '@/types';
 import { makeAutoObservable, makeObservable } from 'mobx';
 import { makePersistable } from 'mobx-persist-store';
 
 export class AuthStorage {
   user?: IUser;
   authenticated: boolean = false;
+  route: Pages = Pages.LOGIN;
 
   constructor() {
     makeAutoObservable(this);
@@ -17,6 +18,10 @@ export class AuthStorage {
 
   setUser = (user: IUser | undefined) => {
     this.user = user;
+  };
+
+  setRoute = (route: Pages) => {
+    this.route = route;
   };
 
   setAuthenticated = (authenticated: boolean) => {

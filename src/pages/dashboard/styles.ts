@@ -6,17 +6,17 @@ export const Container = styled.div`
     width: 100vw;
     height: 100vh;
     display: grid;
-    grid-template-columns: repeat(14, 1fr);
-    grid-template-rows: repeat(14, 1fr);
-    grid-auto-rows: 5vh;
-    grid-auto-columns: calc(100vh / 20);
+    grid-template-columns: repeat(29, 1fr);
+    grid-template-rows: repeat(29, 1fr);
+    grid-auto-rows: 3.33vh;
+    grid-auto-columns: 3.33vw;
 `;
 
 export const NavBar = styled.div`
 display: flex;
-  grid-column-start: 2;
-  grid-column-end: 15;
-  grid-row: 1;
+  grid-column-start: 3;
+  grid-column-end: 30;
+  grid-row: 2;
   display: flex;
   padding: 0 2rem;
   align-items: center;
@@ -24,9 +24,10 @@ display: flex;
 `;
 
 export const MenuBar = styled.div`
-  grid-column: 1;
+  grid-column-start: 1;
+  grid-column-end: 3;
   grid-row-start: 1;
-  grid-row-end: 15;
+  grid-row-end: 30;
   padding: 0.7rem;
 `;
 
@@ -36,14 +37,61 @@ export const MenuArea = styled.div`
   
   background-color: ${({theme}) => theme.colors.primary};
 
-  border-radius: 0.4rem;
+  border-radius: 2rem;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+
+  padding-top: 2.5rem;
+
+  color: ${({theme}) => theme.colors.shape};
+  font-weight: 600;
+`;
+
+type MenuItemProps = {
+  activePage: boolean;
+}
+
+export const MenuItem = styled.div<MenuItemProps>`
+    width: 100%;
+    height: 3.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s;
+    
+    &:hover {
+      border-left: 0.4rem solid ${({theme}) => theme.colors.shape};
+      background-color: ${({theme}) => theme.colors.secondary_light};
+      cursor: pointer;
+    }
+
+    svg {
+      font-size: 1.5rem;
+    }
+    ${({ activePage }) => activePage &&
+      css`
+        border-left: 0.4rem solid ${({theme}) => theme.colors.shape};
+        background-color: ${({theme}) => theme.colors.secondary_light};
+      `
+    }
+`;
+
+export const MenuTitle = styled.p`
+  cursor: default;
+  margin-bottom: 2rem;
 `;
 
 export const ChildrenArea = styled.div`
-  grid-column-start: 2;
-  grid-column-end: 15;
-  grid-row-start: 2;
-  grid-row-end: 15;
+  display: flex;
+  grid-column-start: 4;
+  grid-column-end: 30;
+  grid-row-start: 3;
+  grid-row-end: 30;
   background-color: ${({theme}) => theme.colors.shape};
   padding: 1rem;
 `;
@@ -88,26 +136,26 @@ export const NavProfileArea = styled.div<NavProfileAreaProps>`
     @keyframes animationIn {
       0% {
         opacity: 0;
-        top: calc(5vh + 1.3rem);
+        top: calc(5vh + 3rem);
       }
       100% {
         opacity: 1;
-        top: calc(5vh + 1.6rem);
+        top: calc(5vh + 3.6rem);
       }
     }
 
     @keyframes animationOut {
       0% {
         opacity: 1;
-        top: calc(5vh + 1.6rem);
+        top: calc(5vh + 3.6rem);
       }
       99% {
         opacity: 0;
-        top: calc(5vh + 1.3rem);
+        top: calc(5vh + 3rem);
       }
       100% {
         opacity: 0;
-        top: calc(5vh + 1.3rem);
+        top: calc(5vh + 3.6rem);
         display: none;
       }
     }
@@ -134,7 +182,7 @@ export const NavProfileArea = styled.div<NavProfileAreaProps>`
     
     box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.2);
 
-    top: calc(5vh + 1.6rem);
+    top: calc(5vh + 3.6rem);
     right: calc(0% + 2.6rem);
 
     border-radius: 0.35rem;

@@ -1,11 +1,12 @@
 import { useSession } from "@/hooks";
 import { AuthStorage } from "@/storages";
-import { PageProps, Storage } from "@/types";
+import { PageProps, Pages, Storage } from "@/types";
 import { inject, observer } from "mobx-react";
 import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import { ChildrenArea, Container, MenuArea, MenuBar, NavBar, NavIcon, NavInfo, NavProfile, NavProfileArea } from "./styles";
+import { FaRegUser } from "react-icons/fa";
+import { AiOutlineShoppingCart } from "react-icons/ai";
+import { ChildrenArea, Container, MenuArea, MenuBar, MenuItem, MenuTitle, NavBar, NavIcon, NavInfo, NavProfile, NavProfileArea } from "./styles";
 
 type RootLayoutProps = {
     authStorage?: AuthStorage;
@@ -13,9 +14,12 @@ type RootLayoutProps = {
 }
 
 function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element {
-    const [openMenu, setOpenMenu] = useState(false);
-
     const router = useRouter();
+
+    const [openMenu, setOpenMenu] = useState(false);
+    const [currentPage, setCurrentPage] = useState(router.pathname as Pages);
+    
+
     const {signOut, isAuthenticated, userData} = useSession();
 
     // useEffect(() => {
@@ -26,6 +30,11 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
     // }
     // //eslint-disable-next-line
     // }, [isAuthenticated]);
+
+    const handlePush = (page: Pages) => {
+        setCurrentPage(page);
+        router.push(page);
+    };
     
     return (
         <Container>
@@ -43,10 +52,23 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
                 
             </NavBar>
             <MenuBar>
-                <MenuArea></MenuArea>
+                <MenuArea>
+                    <MenuTitle>ExsfaCX</MenuTitle>
+                    <MenuItem
+                        activePage={currentPage === Pages.HOME}
+                        onClick={() => handlePush(Pages.HOME)}
+                    >
+                        <FaRegUser />
+                    </MenuItem>
+                    <MenuItem
+                        activePage={currentPage === Pages.PRODUCTS}
+                        onClick={() => handlePush(Pages.PRODUCTS)}
+                    >
+                        <AiOutlineShoppingCart />
+                    </MenuItem>
+                </MenuArea>
             </MenuBar>
             <ChildrenArea>
-                <h1>LAYOUT</h1>
                 {children}
             </ChildrenArea>
         </Container>

@@ -2,10 +2,12 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { ApiContextType } from "./api-context.type";
 import { useToast } from "../toast";
 import { ApiException, AuthException, InternalException } from "@/services/api/exceptions/api-exceptions";
-import { IAuthRequest, ICreateProductsRequest } from "@/types/api";
+import { IAuthRequest, ICreateProductsRequest, IDeleteUserRequest, IUpdateUserPermissionRequest } from "@/types/api";
 import { AuthApi } from "@/services/api";
 import { CreateProductApi } from "@/services/api/requests/create-product.api";
 import { GetUsersApi } from "@/services/api/requests/get-users.api";
+import { DeleteUserApi } from "@/services/api/requests/delete-user.api";
+import { UpdateUserPermissionApi } from "@/services/api/requests/update-user-permission.api";
 
 const ApiContext = createContext({} as ApiContextType);
 
@@ -67,12 +69,32 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
     }
   };
 
+  const deleteUser = async (input: IDeleteUserRequest) => {
+    try {
+      await DeleteUserApi.execute(input, token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
+  const updateUserPermission = async (input: IUpdateUserPermissionRequest) => {
+    try {
+      await UpdateUserPermissionApi.execute(input, token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
         auth,
         createProduct,
         getUsers,
+        deleteUser,
+        updateUserPermission,
         token,
       }}>
       {children}

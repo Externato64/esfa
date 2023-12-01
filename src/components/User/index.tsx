@@ -1,15 +1,19 @@
 import React from "react";
-import { Container, UserInfo, UserOptions, UserPhoto, UserStatus } from "./styles";
+import { Container, UserInfo, UserIteraction, UserOptions, UserPhoto, UserStatus } from "./styles";
 import { MdEdit } from "react-icons/md";
 import { FaTrash } from "react-icons/fa6";
 import { UserType } from "@/types/entities";
 
 type UserProps = {
     user: UserType;
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
-export const User = ({ user }: UserProps): JSX.Element => {
+export const User = ({ user, onEdit, onDelete }: UserProps): JSX.Element => {
+
     return (
+        <>
         <Container>
             <UserPhoto
                 profileImage={user.photo ?? '/images/logo_externato.png'}
@@ -22,12 +26,22 @@ export const User = ({ user }: UserProps): JSX.Element => {
                 active={user.active}
             />
             <UserOptions>
-                <MdEdit
-                />
-                <FaTrash
-                />
+                <UserIteraction
+                    onClick={onEdit}
+                >
+                    <MdEdit
+                    />
+                </UserIteraction>
+
+                <UserIteraction
+                    onClick={onDelete}
+                >
+                    <FaTrash
+                    />
+                </UserIteraction>
             </UserOptions>
 
         </Container>
+        </>
     );
 };

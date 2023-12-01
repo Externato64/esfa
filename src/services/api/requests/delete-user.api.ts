@@ -2,16 +2,16 @@ import {api} from '../utils/api';
 import {apiErrorCatch} from '../utils/api-error-catch';
 import {AxiosError} from 'axios';
 import { AuthException } from '../exceptions/api-exceptions';
-import { IGetUsersResponse } from '@/types/api';
+import { IDeleteUserRequest } from '@/types/api';
 
-export class GetUsersApi {
-  static async execute(token?: string): Promise<IGetUsersResponse> {
+export class DeleteUserApi {
+  static async execute(input: IDeleteUserRequest, token?: string): Promise<void> {
     if(!token) {
       throw new AuthException();
     }
-
-    const response = await api
-      .get('/v1/users', {
+    
+    await api
+      .delete(`/v1/users/${input.email}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -19,7 +19,5 @@ export class GetUsersApi {
       .catch((err: AxiosError) => {
         apiErrorCatch(err);
       });
-
-    return response.data as IGetUsersResponse;
   }
 }

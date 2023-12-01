@@ -86,6 +86,12 @@ export const UserStatus = styled.div<UserStatusProps>`
 
 export const UserButton = styled(Button)``;
 
+export const UserIteraction = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
 export const UserOptions = styled.div`
     display: flex;
     align-items: center;

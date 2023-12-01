@@ -94,6 +94,7 @@ export const ChildrenArea = styled.div`
   grid-row-end: 30;
   background-color: ${({theme}) => theme.colors.shape};
   padding: 1rem;
+  overflow-y: scroll;
 `;
 
 export const NavInfo = styled.p`

@@ -2,16 +2,18 @@ import {api} from '../utils/api';
 import {apiErrorCatch} from '../utils/api-error-catch';
 import {AxiosError} from 'axios';
 import { AuthException } from '../exceptions/api-exceptions';
-import { IGetUsersResponse } from '@/types/api';
+import { IUpdateUserPermissionRequest } from '@/types/api';
 
-export class GetUsersApi {
-  static async execute(token?: string): Promise<IGetUsersResponse> {
+export class UpdateUserPermissionApi {
+  static async execute(input: IUpdateUserPermissionRequest, token?: string): Promise<void> {
     if(!token) {
       throw new AuthException();
     }
-
-    const response = await api
-      .get('/v1/users', {
+    
+    await api
+      .put(`/v1/users/${input.email}`, {
+        isAdmin: input.isAdmin
+      }, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -19,7 +21,5 @@ export class GetUsersApi {
       .catch((err: AxiosError) => {
         apiErrorCatch(err);
       });
-
-    return response.data as IGetUsersResponse;
   }
 }

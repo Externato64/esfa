@@ -109,20 +109,21 @@ export const UserStatus = styled.div<UserStatusProps>`
     @media screen and (max-width: 1100px){
         font-size: 0.6rem;
         border-radius: 0.6rem;
+        height: 100%;
         &::after {
-        ${({active}) =>
-            active ?
-            css`
-                content: 'AT';
-                border-color: ${({theme}) => theme.colors.success};
-            `
-            :
-            css`
-                content: 'IN';
-                border-color: ${({theme}) => theme.colors.attention};
-            `
+            ${({active}) =>
+                active ?
+                css`
+                    content: 'AT';
+                    border-color: ${({theme}) => theme.colors.success};
+                `
+                :
+                css`
+                    content: 'IN';
+                    border-color: ${({theme}) => theme.colors.attention};
+                `
+            }
         }
-    }
     }
 `;
 

@@ -277,5 +277,9 @@ export const ResponsiveNavProfile = styled(NavProfile)`
 `;
 
 export const ResponsiveNavProfileArea = styled(NavProfileArea)`
+  display: none;
+  @media screen and (max-width: 1100px){
+    display: flex;
+  }
   right: calc(0% + 1.6rem);
 `;

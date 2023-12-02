@@ -2,12 +2,13 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { ApiContextType } from "./api-context.type";
 import { useToast } from "../toast";
 import { ApiException, AuthException, InternalException } from "@/services/api/exceptions/api-exceptions";
-import { IAuthRequest, ICreateProductsRequest, IDeleteUserRequest, IUpdateUserPermissionRequest } from "@/types/api";
+import { IAuthRequest, ICreateProductsRequest, ICreateUserRequest, IDeleteUserRequest, IUpdateUserPermissionRequest } from "@/types/api";
 import { AuthApi } from "@/services/api";
 import { CreateProductApi } from "@/services/api/requests/create-product.api";
 import { GetUsersApi } from "@/services/api/requests/get-users.api";
 import { DeleteUserApi } from "@/services/api/requests/delete-user.api";
 import { UpdateUserPermissionApi } from "@/services/api/requests/update-user-permission.api";
+import { CreateUserApi } from "@/services/api/requests/create-user.api";
 
 const ApiContext = createContext({} as ApiContextType);
 
@@ -87,11 +88,21 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
     }
   };
 
+  const createUser = async (input: ICreateUserRequest) => {
+    try {
+      await CreateUserApi.execute(input, token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
         auth,
         createProduct,
+        createUser,
         getUsers,
         deleteUser,
         updateUserPermission,

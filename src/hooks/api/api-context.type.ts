@@ -3,6 +3,7 @@ import {
   IAuthResponse,
   ICreateProductsRequest,
   ICreateProductsResponse,
+  ICreateUserRequest,
   IDeleteUserRequest,
   IGetUsersResponse,
   IUpdateUserPermissionRequest
@@ -10,6 +11,7 @@ import {
 
 export type ApiContextType = {
   auth: (input: IAuthRequest) => Promise<IAuthResponse>;
+  createUser: (input: ICreateUserRequest) => Promise<void>;
   createProduct: (input: ICreateProductsRequest) => Promise<ICreateProductsResponse>;
   getUsers: () => Promise<IGetUsersResponse>;
   deleteUser: (input: IDeleteUserRequest) => Promise<void>;

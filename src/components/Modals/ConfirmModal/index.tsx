@@ -3,7 +3,7 @@ import { CloseButtonArea, ConfirmButton, Container, DeclineButton, IconArea, Ite
 import { CiCircleInfo, CiWarning } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 
-type ModalType = 'info' | 'warn' | 'err';
+export type ModalType = 'info' | 'warn' | 'err';
 type ConfirmModalProps = {
     message: string;
     onAccept: () => void;

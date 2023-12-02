@@ -8,7 +8,7 @@ import { Button } from "@/components/base";
 import { User } from "@/components";
 import { UserType } from "@/types/entities";
 import { useApi, useToast } from "@/hooks";
-import { ConfirmModal, LoadingModal } from "@/components/Modals";
+import { ConfirmModal, InputModal, LoadingModal } from "@/components/Modals";
 
 function HomePage(): JSX.Element {
 
@@ -17,10 +17,11 @@ function HomePage(): JSX.Element {
     
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [updateModalVisible, setUpdateModalVisible] = useState(false);
+    const [createUserVisible, setCreateUserVisible] = useState(false);
     
     const [currentUserEmail, setCurrentUserEmail] = useState('');
 
-    const {getUsers, deleteUser, updateUserPermission} = useApi();
+    const {getUsers, deleteUser, updateUserPermission, createUser} = useApi();
     const {toastError, toastSuccess, toastInfo} = useToast();
 
     const handleFetchUsers = async () => {
@@ -64,6 +65,21 @@ function HomePage(): JSX.Element {
         }
     };
 
+    const handleCreateUser = async (input: string) => {
+        setIsLoading(true);
+        try {
+            await createUser({
+                email: input,
+            });
+            handleFetchUsers();
+            toastSuccess('Usuário criado com sucesso');
+        } catch(err) {
+         toastError('Erro ao criar usuário');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
 
     useEffect(() => {
         handleFetchUsers()
@@ -97,6 +113,13 @@ function HomePage(): JSX.Element {
                     toastInfo('Nenhuma ação feita!');
                 }}
             />
+
+            <InputModal
+                visible={createUserVisible}
+                closeModal={() => setCreateUserVisible(false)}
+                message="Insira o email do usuário:"
+                onClick={handleCreateUser}
+                />
             <Layout>
                 <Container>
                     <Header>
@@ -106,7 +129,7 @@ function HomePage(): JSX.Element {
                         </TitleArea>
                         <Button
                             name="Adicionar"
-                            onClick={() => ({})}
+                            onClick={() => setCreateUserVisible(true)}
                         />
                     </Header>
                     <UsersArea>

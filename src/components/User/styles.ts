@@ -16,6 +16,10 @@ export const Container = styled.div`
     }
 
     border-radius: 0.45rem;
+
+    @media screen and (max-width: 1100px){
+        grid-gap: 0.5rem;
+    }
 `;
 
 export const UserInfo = styled.p`
@@ -26,6 +30,18 @@ export const UserInfo = styled.p`
 
     align-items: center;
     cursor: default;
+
+    @media screen and (max-width: 1100px){
+        font-size: 1rem;
+        &:nth-child(2) {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        &:nth-child(3) {
+            overflow: scroll;
+        }
+    }
 `;
 
 type UserPhotoProps = {
@@ -39,6 +55,11 @@ export const UserPhoto = styled.div<UserPhotoProps>`
     height: 3.7rem;
     width: 3.7rem;
     transition: 0.1s;
+
+    @media screen and (max-width: 1100px){
+        height: 2rem;
+        width: 2rem;
+    }
 `;
 
 type UserStatusProps = {
@@ -49,7 +70,10 @@ export const UserStatus = styled.div<UserStatusProps>`
     border-radius: 1rem;
     
     max-width: 8rem;
+    max-height: 60%;
     
+    margin: auto 0;
+
     font-size: 1.3rem;
 
     display: flex;
@@ -82,6 +106,24 @@ export const UserStatus = styled.div<UserStatusProps>`
             `
         }
     }
+    @media screen and (max-width: 1100px){
+        font-size: 0.6rem;
+        border-radius: 0.6rem;
+        &::after {
+        ${({active}) =>
+            active ?
+            css`
+                content: 'AT';
+                border-color: ${({theme}) => theme.colors.success};
+            `
+            :
+            css`
+                content: 'IN';
+                border-color: ${({theme}) => theme.colors.attention};
+            `
+        }
+    }
+    }
 `;
 
 export const UserButton = styled(Button)``;
@@ -109,5 +151,13 @@ export const UserOptions = styled.div`
         cursor: pointer;
         border-radius: 50%;
         background-color: ${({theme}) => theme.colors.secondary_ultralight};
+    }
+
+    @media screen and (max-width: 1100px){
+        svg {
+            margin-right: 0.2rem;
+            padding: 0.2rem;
+            font-size: 1.5rem;
+        }
     }
 `;

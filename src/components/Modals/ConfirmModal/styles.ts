@@ -47,6 +47,10 @@ export const TopArea = styled.div`
 
     display: flex;
     justify-content: end;
+
+    @media screen and (max-width: 1100px){
+        margin-top: 0.8rem;
+    };
 `;
 
 export const CloseButtonArea = styled.div`
@@ -73,10 +77,19 @@ export const IconArea = styled.div`
 
     margin-top: 3rem;
     margin-bottom: 2rem;
+    
+    @media screen and (max-width: 1100px){
+        margin-top: 1.6rem;
+    };
 `;
 
 export const Message = styled.p`
     font-size: 1.8rem;
+    text-align: center;
+    
+    @media screen and (max-width: 1100px){
+        font-size: 1.6rem;
+    };
 `;
 
 export const IteractiveArea = styled.div`

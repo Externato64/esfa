@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import React, { ReactNode, useEffect, useState } from "react";
 import { FaRegUser } from "react-icons/fa";
 import { AiOutlineShoppingCart } from "react-icons/ai";
-import { ChildrenArea, Container, MenuArea, MenuBar, MenuItem, MenuTitle, NavBar, NavIcon, NavInfo, NavProfile, NavProfileArea } from "./styles";
+import { ChildrenArea, Container, MenuArea, MenuBar, MenuItem, MenuTitle, NavBar, NavIcon, NavInfo, NavProfile, NavProfileArea, ResponsiveNavProfile, ResponsiveNavProfileArea } from "./styles";
 
 type RootLayoutProps = {
     authStorage?: AuthStorage;
@@ -66,6 +66,16 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
                     >
                         <AiOutlineShoppingCart />
                     </MenuItem>
+
+                    <ResponsiveNavProfile
+                        profileImage={userData?.photo ?? '/images/logo_externato.png'}
+                        onClick={() => setOpenMenu(!openMenu)}
+                    />
+                    <ResponsiveNavProfileArea
+                        opened={openMenu}
+                    >
+                        <NavIcon>SAIR</NavIcon>
+                    </ResponsiveNavProfileArea>
                 </MenuArea>
             </MenuBar>
             <ChildrenArea>

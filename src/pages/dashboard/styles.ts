@@ -21,6 +21,10 @@ display: flex;
   padding: 0 2rem;
   align-items: center;
   justify-content: end;
+
+  @media screen and (max-width: 1100px){
+    display: none;
+  }
 `;
 
 export const MenuBar = styled.div`
@@ -29,6 +33,14 @@ export const MenuBar = styled.div`
   grid-row-start: 1;
   grid-row-end: 30;
   padding: 0.7rem;
+
+  @media screen and (max-width: 1100px){
+    grid-column-start: 1;
+    grid-column-end: 30;
+    grid-row: 2;
+
+    display: flex;
+  }
 `;
 
 export const MenuArea = styled.div`
@@ -48,6 +60,14 @@ export const MenuArea = styled.div`
 
   color: ${({theme}) => theme.colors.shape};
   font-weight: 600;
+
+  @media screen and (max-width: 1100px){
+    display: flex;
+    flex-direction: row;
+    padding: 0 1rem;
+    align-items: center;
+    justify-content: space-between;
+  }
 `;
 
 type MenuItemProps = {
@@ -79,11 +99,27 @@ export const MenuItem = styled.div<MenuItemProps>`
         background-color: ${({theme}) => theme.colors.secondary_light};
       `
     }
+
+  @media screen and (max-width: 1100px){
+    max-width: 30%;
+
+    ${({ activePage }) => activePage &&
+      css`
+        border-left: 0.4rem solid ${({theme}) => theme.colors.shape};
+        background-color: ${({theme}) => theme.colors.secondary_light};
+      `
+    }
+  }
 `;
 
 export const MenuTitle = styled.p`
   cursor: default;
   margin-bottom: 2rem;
+  
+  @media screen and (max-width: 1100px){
+    margin: 0;
+    text-align: left;
+  }
 `;
 
 export const ChildrenArea = styled.div`
@@ -95,6 +131,10 @@ export const ChildrenArea = styled.div`
   background-color: ${({theme}) => theme.colors.shape};
   padding: 1rem;
   overflow-y: scroll;
+
+  @media screen and (max-width: 1100px){
+    grid-column-start: 1;
+  }
 `;
 
 export const NavInfo = styled.p`
@@ -223,4 +263,19 @@ export const NavIcon = styled.button`
     cursor: pointer;
     background-color: ${({theme}) => theme.colors.primary_hover};
   }
+`;
+
+export const ResponsiveNavProfile = styled(NavProfile)`
+  display: none;
+  border: 2px solid ${({theme}) => theme.colors.shape};
+  height: 2.4rem;
+  width: 2.4rem;
+  
+  @media screen and (max-width: 1100px){
+    display: flex;
+  }
+`;
+
+export const ResponsiveNavProfileArea = styled(NavProfileArea)`
+  right: calc(0% + 1.6rem);
 `;

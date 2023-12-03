@@ -9,6 +9,7 @@ import { GetUsersApi } from "@/services/api/requests/get-users.api";
 import { DeleteUserApi } from "@/services/api/requests/delete-user.api";
 import { UpdateUserPermissionApi } from "@/services/api/requests/update-user-permission.api";
 import { CreateUserApi } from "@/services/api/requests/create-user.api";
+import { GetProductsApi } from "@/services/api/requests/get-products.api";
 
 const ApiContext = createContext({} as ApiContextType);
 
@@ -70,6 +71,15 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
     }
   };
 
+  const getProducts = async () => {
+    try {
+      return await GetProductsApi.execute(token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
   const deleteUser = async (input: IDeleteUserRequest) => {
     try {
       await DeleteUserApi.execute(input, token);
@@ -104,6 +114,7 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
         createProduct,
         createUser,
         getUsers,
+        getProducts,
         deleteUser,
         updateUserPermission,
         token,

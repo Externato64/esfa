@@ -11,7 +11,7 @@ import {
     TopArea
 } from "./styles";
 import { IoMdClose } from "react-icons/io";
-import { CiCircleInfo, CiWarning } from "react-icons/ci";
+import { CiCircleInfo } from "react-icons/ci";
 
 type InputModalProps = {
     message: string;

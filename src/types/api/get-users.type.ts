@@ -1,4 +1,4 @@
-import { ProductSegmentType, ProductType, UserType } from '../entities';
+import { UserType } from '../entities';
 
 export type IGetUsersResponse = {
   users: Array<UserType>;

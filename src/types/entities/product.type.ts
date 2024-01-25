@@ -7,3 +7,10 @@ export type ProductType = {
   type: ProductSegmentType;
   id: string;
 };
+
+export type CreateProductType = {
+  name: string;
+  price: number;
+  oldPrice?: number;
+  type: ProductSegmentType;
+};

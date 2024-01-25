@@ -1,4 +1,4 @@
-import { ProductType } from "@/types/entities";
+import { CreateProductType, ProductSegmentType, ProductType } from "@/types/entities";
 import React, { useEffect, useState } from "react";
 import { CloseButtonArea, ConfirmButton, Container, IteractiveArea, ModalArea, ProductInfoArea, ProductInput, ProductSection, ProductSectionInfo, ProductSelectionArea, TopArea } from "./styles";
 import { IoMdClose } from "react-icons/io";
@@ -9,7 +9,7 @@ import { FaHamburger } from "react-icons/fa";
 
 type ProductModalProps = {
     product?: ProductType;
-    onAccept: () => void;
+    onAccept: (input: CreateProductType) => void;
     visible: boolean;
     closeModal: () => void;
 }
@@ -103,7 +103,12 @@ export const ProductModal = ({
                         <ConfirmButton
                             name="Salvar"
                             onClick={() => {
-                                onAccept();
+                                onAccept({
+                                    name: productName,
+                                    price: productPrice,
+                                    type: productType as ProductSegmentType,
+                                    oldPrice: productOldPrice,
+                                });
                                 closeModal();
                             }}
                         />

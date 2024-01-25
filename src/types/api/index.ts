@@ -5,3 +5,5 @@ export * from './delete-user.type';
 export * from './update-user-permission.type';
 export * from './create-user.type';
 export * from './get-products.type';
+export * from './update-product.type';
+export * from './delete-product.type';

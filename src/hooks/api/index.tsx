@@ -2,7 +2,7 @@ import { ReactNode, createContext, useContext, useState } from "react";
 import { ApiContextType } from "./api-context.type";
 import { useToast } from "../toast";
 import { ApiException, AuthException, InternalException } from "@/services/api/exceptions/api-exceptions";
-import { IAuthRequest, ICreateProductsRequest, ICreateUserRequest, IDeleteUserRequest, IUpdateUserPermissionRequest } from "@/types/api";
+import { IAuthRequest, ICreateProductsRequest, ICreateUserRequest, IDeleteProductRequest, IDeleteUserRequest, IUpdateProductRequest, IUpdateUserPermissionRequest } from "@/types/api";
 import { AuthApi } from "@/services/api";
 import { CreateProductApi } from "@/services/api/requests/create-product.api";
 import { GetUsersApi } from "@/services/api/requests/get-users.api";
@@ -10,6 +10,8 @@ import { DeleteUserApi } from "@/services/api/requests/delete-user.api";
 import { UpdateUserPermissionApi } from "@/services/api/requests/update-user-permission.api";
 import { CreateUserApi } from "@/services/api/requests/create-user.api";
 import { GetProductsApi } from "@/services/api/requests/get-products.api";
+import { UpdateProductApi } from "@/services/api/requests/update-product.api";
+import { DeleteProductApi } from "@/services/api/requests/delete-product.api";
 
 const ApiContext = createContext({} as ApiContextType);
 
@@ -107,16 +109,36 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
     }
   };
 
+  const updateProduct = async (input: IUpdateProductRequest) => {
+    try {
+      await UpdateProductApi.execute(input, token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
+  const deleteProduct = async (input: IDeleteProductRequest) => {
+    try {
+      await DeleteProductApi.execute(input, token);
+    } catch (err: any) {
+      errorHandler(err);
+      throw err;
+    }
+  };
+
   return (
     <ApiContext.Provider
       value={{
         auth,
         createProduct,
+        getProducts,
+        updateProduct,
+        deleteProduct,
         createUser,
         getUsers,
-        getProducts,
-        deleteUser,
         updateUserPermission,
+        deleteUser,
         token,
       }}>
       {children}

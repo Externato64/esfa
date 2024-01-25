@@ -6,10 +6,11 @@ import Head from "next/head";
 import { Container, Header, HeaderAction, ProductsArea, ProductsHeader, ProductsItem, Subtitle, Title, TitleArea } from "./styles";
 import { Button } from "@/components/base";
 import { Product } from "@/components/Product";
-import { ProductType } from "@/types/entities";
+import { CreateProductType, ProductType } from "@/types/entities";
 import { useApi, useToast } from "@/hooks";
 import { ConfirmModal, LoadingModal } from "@/components/Modals";
 import { ProductModal } from "@/components/Modals/ProductModal";
+import { generateProductsPdf } from "@/services/utils";
 
 function ProductsPage(): JSX.Element {
     const [products, setProducts] = useState<Array<ProductType>>([]);
@@ -20,8 +21,13 @@ function ProductsPage(): JSX.Element {
     const [currentProduct, setCurrentProduct] = useState<ProductType | undefined>(undefined);
 
 
-    const {getProducts} = useApi();
+    const {getProducts, createProduct, updateProduct, deleteProduct} = useApi();
     const {toastError, toastSuccess, toastInfo} = useToast();
+
+    const handleGeneratePdf = () => {
+        const pdfDocument = generateProductsPdf(products);
+        pdfDocument.download('lista-produtos');
+    };
 
     const handleFetchProducts = async () => {
         setIsLoading(true);
@@ -31,6 +37,43 @@ function ProductsPage(): JSX.Element {
             toastSuccess('Sucesso ao buscar produtos');
         } catch(err) {
          toastError('Erro ao buscar produtos');
+        }
+    };
+
+    const handleDeleteProduct = async () => {
+        setIsLoading(true);
+        try {
+            if(currentProduct) {
+                await deleteProduct({
+                    id: currentProduct?.id
+                });
+            }
+            toastSuccess('Sucesso ao buscar produtos');
+        } catch(err) {
+         toastError('Erro ao buscar produtos');
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const handleCreateOrUpdateProduct = async (input: CreateProductType) => {
+        setIsLoading(true);
+        try {
+            if(currentProduct) {
+                await updateProduct({
+                    ...input,
+                    id: currentProduct.id
+                });
+                toastSuccess('Produto alterado');
+            } else {
+                await createProduct(input);
+                toastSuccess('Produto criado');
+            }
+            await handleFetchProducts();
+        } catch(err) {
+         toastError('Ocorreu um erro');
+        } finally {
+            setIsLoading(false);
         }
     };
 
@@ -52,7 +95,9 @@ function ProductsPage(): JSX.Element {
                 visible={deleteModalVisible}
                 closeModal={() => setDeleteModalVisible(false)}
                 message={`Deseja excluir o produto ${currentProduct?.name}?`}
-                onAccept={() => {}}
+                onAccept={() => {
+                    handleDeleteProduct();
+                }}
                 onDecline={() => {
                     toastInfo('Nenhuma ação feita!');
                 }}
@@ -60,7 +105,7 @@ function ProductsPage(): JSX.Element {
             <ProductModal
                 visible={createOrUpdateProductVisible}
                 closeModal={() => setCreateOrUpdateProductVisible(false)}
-                onAccept={() => ({})}
+                onAccept={handleCreateOrUpdateProduct}
                 product={currentProduct}
             />
             <Layout>
@@ -80,7 +125,9 @@ function ProductsPage(): JSX.Element {
                                 />
                                 <Button
                                     name="Imprimir"
-                                    onClick={() => ({})}
+                                    onClick={() => {
+                                        handleGeneratePdf();
+                                    }}
                                 />
                             </HeaderAction>
                         </Header>

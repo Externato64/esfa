@@ -10,5 +10,5 @@ type LoadingProps = {
 export const Loading = (input: LoadingProps): JSX.Element => {
     return (
         <Container {...input} />
-    )
-}
+    );
+};

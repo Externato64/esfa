@@ -1,4 +1,4 @@
-import { IUser } from '@/types';
+import { IUser, Pages } from '@/types';
 import React, {
   ReactNode,
   createContext,
@@ -35,8 +35,7 @@ const SessionProvider = ({children}: SessionProviderProps): JSX.Element => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!token) {
-      toastWarning('Sessão expirada');
+    if (!token && router.pathname !== Pages.LOGIN) {
       signOut();
       localStorage.setItem('@esfa-token', '');
     }

@@ -18,8 +18,10 @@ function LoginPage({ authStorage }: PageProps): JSX.Element {
         authStorage.setRoute(Pages.HOME);
         router.push(Pages.HOME);
     } else {
-        authStorage.setRoute(Pages.LOGIN);
-        localStorage.setItem('@esfa-token', '');
+        if(router.pathname !== Pages.LOGIN) {
+            authStorage.setRoute(Pages.LOGIN);
+            localStorage.setItem('@esfa-token', '');
+        }
       }
       //eslint-disable-next-line
     }, [isAuthenticated]);

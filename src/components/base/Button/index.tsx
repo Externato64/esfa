@@ -47,8 +47,8 @@ export const Button = ({
                 </>
             }
         </Container>
-    )
-}
+    );
+};
 
 // export const getServerSideProps = (async (context) => {
 //     const theme = useTheme();

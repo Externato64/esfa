@@ -22,14 +22,14 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
 
     const {signOut, isAuthenticated, userData} = useSession();
 
-    // useEffect(() => {
-    // if(!isAuthenticated) {
-    //     signOut()
-    //     .then(() => router.push('/'))
-    //     .catch(() => router.push('/'));
-    // }
-    // //eslint-disable-next-line
-    // }, [isAuthenticated]);
+    useEffect(() => {
+    if(!isAuthenticated) {
+        signOut()
+        .then(() => router.push('/'))
+        .catch(() => router.push('/'));
+    }
+    //eslint-disable-next-line
+    }, [isAuthenticated]);
 
     const handlePush = (page: Pages) => {
         setCurrentPage(page);
@@ -47,7 +47,7 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
                 <NavProfileArea
                     opened={openMenu}
                 >
-                    <NavIcon>SAIR</NavIcon>
+                    <NavIcon onClick={signOut} >SAIR</NavIcon>
                 </NavProfileArea>
                 
             </NavBar>

@@ -6,7 +6,7 @@ import {AxiosError} from 'axios';
 export class AuthApi {
   static async execute({email}: IAuthRequest): Promise<IAuthResponse> {
     const response = await api
-      .post('/v1/auth/google', {
+      .post('/v1/auth', {
         email,
       })
       .catch((err: AxiosError) => {

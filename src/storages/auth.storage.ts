@@ -6,10 +6,14 @@ export class AuthStorage {
   user?: IUser;
   authenticated: boolean = false;
   route: Pages = Pages.LOGIN;
+  token: string | undefined = undefined;
 
   constructor() {
     makeAutoObservable(this);
-    makePersistable(this, { name: 'AuthStorage', properties: [] } );
+    makePersistable(this, {
+      name: 'AuthStorage',
+      properties: ['token'],
+    });
   }
 
   getUser = () => {
@@ -24,6 +28,14 @@ export class AuthStorage {
     this.route = route;
   };
 
+  getToken = () => {
+    return this.token;
+  };
+
+  setToken = (token: string | undefined) => {
+    this.token = token;
+  };
+
   setAuthenticated = (authenticated: boolean) => {
     this.authenticated = authenticated;
   };
@@ -33,5 +45,6 @@ export class AuthStorage {
 
     this.authenticated = data.authenticated !== null ? data.authenticated : false;
     this.user = data.user !== null ? data.user : undefined;
+    this.token = data.token !== null ? data.token : undefined;
   };
 }

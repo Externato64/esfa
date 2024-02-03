@@ -19,6 +19,7 @@ function LoginPage({ authStorage }: PageProps): JSX.Element {
         router.push(Pages.HOME);
     } else {
         authStorage.setRoute(Pages.LOGIN);
+        localStorage.setItem('@esfa-token', '');
       }
       //eslint-disable-next-line
     }, [isAuthenticated]);

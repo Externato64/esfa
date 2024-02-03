@@ -3,5 +3,5 @@ export type IAuthRequest = {
 };
 
 export type IAuthResponse = {
-  token: string;
+  access_token: string;
 };

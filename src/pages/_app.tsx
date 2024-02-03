@@ -1,3 +1,4 @@
+"use client";
 import { storages } from '@/storages';
 import { Provider, observer } from 'mobx-react';
 import type { AppProps } from 'next/app';

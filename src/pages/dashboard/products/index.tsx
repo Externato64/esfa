@@ -66,6 +66,10 @@ function ProductsPage(): JSX.Element {
                 });
                 toastSuccess('Produto alterado');
             } else {
+                if((!input.price || input.price <=0) && (input.oldPrice && input.oldPrice > 0)) {
+                    input.price = input.oldPrice;
+                    input.oldPrice = undefined;
+                }
                 await createProduct(input);
                 toastSuccess('Produto criado');
             }

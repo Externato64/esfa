@@ -38,8 +38,7 @@ const SessionProvider = ({children}: SessionProviderProps): JSX.Element => {
     if (!token) {
       toastWarning('Sessão expirada');
       signOut();
-      setUserData(undefined);
-      setIsAuthenticated(false);
+      localStorage.setItem('@esfa-token', '');
     }
     //eslint-disable-next-line
   }, [token])

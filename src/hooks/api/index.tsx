@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import { ApiContextType } from "./api-context.type";
 import { useToast } from "../toast";
 import { ApiException, AuthException, InternalException } from "@/services/api/exceptions/api-exceptions";
@@ -12,21 +12,32 @@ import { CreateUserApi } from "@/services/api/requests/create-user.api";
 import { GetProductsApi } from "@/services/api/requests/get-products.api";
 import { UpdateProductApi } from "@/services/api/requests/update-product.api";
 import { DeleteProductApi } from "@/services/api/requests/delete-product.api";
+import { inject, observer } from "mobx-react";
+import { Storage } from "@/types";
+import { AuthStorage } from "@/storages";
 
 const ApiContext = createContext({} as ApiContextType);
 
 type ApiProviderType = {
   children: ReactNode;
+  authStorage: AuthStorage;
 };
 
-const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
+const ApiProviderComponent = ({children, authStorage }: ApiProviderType): JSX.Element => {
   const {toastError, toastWarning} = useToast();
-  const [token, setToken] = useState<string>();
+  const [token, setToken] = useState<string | undefined>();
+
+  useEffect(() => {
+    const nToken = localStorage.getItem('@esfa-token');
+    if(nToken) {
+      setToken(nToken);
+    }
+  }, []);
 
   const errorHandler = (input: Error): void => {
     if (input instanceof AuthException) {
 
-      setToken(undefined);
+      authStorage.setToken(undefined);
       return;
     }
 
@@ -47,9 +58,12 @@ const ApiProvider = ({children}: ApiProviderType): JSX.Element => {
   const auth = async (input: IAuthRequest) => {
     try {
       const response = await AuthApi.execute(input);
-      setToken(response.token);
+
+      localStorage.setItem('@esfa-token', response.access_token);
+      setToken(response.access_token);
       return response;
     } catch (err: any) {
+      console.log('err', err);
       errorHandler(err);
       throw err;
     }
@@ -151,4 +165,8 @@ function useApi() {
   return context;
 }
 
-export {ApiProvider, useApi};
+const ApiProvider = inject(Storage.AUTH)(observer(ApiProviderComponent));
+export {
+  ApiProvider,
+  useApi
+};

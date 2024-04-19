@@ -49,6 +49,7 @@ function ProductsPage(): JSX.Element {
                 });
             }
             toastSuccess('Sucesso ao buscar produtos');
+            await handleFetchProducts();
         } catch(err) {
          toastError('Erro ao buscar produtos');
         } finally {
@@ -59,17 +60,23 @@ function ProductsPage(): JSX.Element {
     const handleCreateOrUpdateProduct = async (input: CreateProductType) => {
         setIsLoading(true);
         try {
+            if(
+                (!input.price || input.price <=0) &&
+                (input.oldPrice && input.oldPrice > 0)
+            ) {
+                input.price = input.oldPrice;
+                input.oldPrice = undefined;
+            }
             if(currentProduct) {
+                if(input.oldPrice === input.price) {
+                    input.oldPrice = undefined;
+                }
                 await updateProduct({
                     ...input,
                     id: currentProduct.id
                 });
                 toastSuccess('Produto alterado');
             } else {
-                if((!input.price || input.price <=0) && (input.oldPrice && input.oldPrice > 0)) {
-                    input.price = input.oldPrice;
-                    input.oldPrice = undefined;
-                }
                 await createProduct(input);
                 toastSuccess('Produto criado');
             }

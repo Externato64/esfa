@@ -7,9 +7,11 @@ import { Container, GoogleIcon, LoginArea, LoginButton, LoginInfoArea, LoginInfo
 import { PageProps, Pages, Storage } from "@/types";
 import { useSession, useToast } from "@/hooks";
 import { useRouter } from "next/router";
+import { LoadingModal } from "@/components/Modals";
 
 function LoginPage({ authStorage }: PageProps): JSX.Element {
 
+    const [loading, setLoading] = useState(false);
     const {isAuthenticated} = useSession();
     const router = useRouter();
 
@@ -32,6 +34,7 @@ function LoginPage({ authStorage }: PageProps): JSX.Element {
     const logGoogleUser = async () => {
         try {
             await signIn();
+            setLoading(true);
             authStorage.setAuthenticated(true);
         } catch(err) {
             toastError('Ocorreu um erro fazer login');
@@ -42,6 +45,7 @@ function LoginPage({ authStorage }: PageProps): JSX.Element {
             <Head>
                 <title>Login - EsfaCX</title>
             </Head>
+            { loading && <LoadingModal /> }
             <Container>
                 <LoginArea>
                     <Image

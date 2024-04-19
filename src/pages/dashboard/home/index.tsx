@@ -13,7 +13,7 @@ import { ConfirmModal, InputModal, LoadingModal } from "@/components/Modals";
 function HomePage(): JSX.Element {
 
     const [users, setUsers] = useState<Array<UserType>>([]);
-    const [loading, setIsLoading] = useState(false);
+    const [loading, setIsLoading] = useState(true);
     
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [updateModalVisible, setUpdateModalVisible] = useState(false);

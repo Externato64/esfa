@@ -86,4 +86,4 @@ function DashboardLayout({children, authStorage}: RootLayoutProps): JSX.Element 
 }
 
 const Layout = inject(Storage.AUTH)(observer(DashboardLayout));
-export { Layout };
+export default Layout;

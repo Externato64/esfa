@@ -1,7 +1,7 @@
 import { Storage } from "@/types";
 import { inject, observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
-import { Layout } from "../layout";
+import Layout from "../layout.page";
 import Head from "next/head";
 import { Container, Header, Subtitle, Title, TitleArea, UsersArea, UsersHeader, UsersItem } from "./styles";
 import { Button } from "@/components/base";

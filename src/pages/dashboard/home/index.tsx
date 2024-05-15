@@ -86,6 +86,8 @@ function HomePage(): JSX.Element {
         .finally(() => {
             setIsLoading(false);
         });
+
+    // eslint-disable-next-line
     }, []);
 
     return (

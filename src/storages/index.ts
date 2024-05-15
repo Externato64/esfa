@@ -9,4 +9,4 @@ const storages = {
 export {
     storages,
     AuthStorage
-}
+};

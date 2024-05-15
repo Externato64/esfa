@@ -20,7 +20,7 @@ const ApiContext = createContext({} as ApiContextType);
 
 type ApiProviderType = {
   children: ReactNode;
-  authStorage: AuthStorage;
+  authStorage?: AuthStorage;
 };
 
 const ApiProviderComponent = ({children, authStorage }: ApiProviderType): JSX.Element => {
@@ -37,7 +37,7 @@ const ApiProviderComponent = ({children, authStorage }: ApiProviderType): JSX.El
   const errorHandler = (input: Error): void => {
     if (input instanceof AuthException) {
 
-      authStorage.setToken(undefined);
+      authStorage?.setToken(undefined);
       return;
     }
 
